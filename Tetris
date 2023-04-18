@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <conio.h>
+
+using namespace std;
+
+const int WIDTH = 10; // Width of the game board
+const int HEIGHT = 20; // Height of the game board
+const int SHAPE_SIZE = 4; // Number of blocks in a tetromino shape
+
+// Define the shapes of the tetrominos
+const int TETROMINOS[7][4][2] = {
+    { {0,0}, {1,0}, {0,1}, {1,1} }, // Square
+    { {0,0}, {0,1}, {0,2}, {0,3} }, // Line
+    { {0,0}, {1,0}, {1,1}, {2,1} }, // Z
+    { {1,0}, {0,1}, {1,1}, {0,2} }, // S
+    { {0,0}, {1,0}, {2,0}, {1,1} }, // T
+    { {0,0}, {1,0}, {2,0}, {2,1} }, // L
+    { {2,0}, {0,1}, {1,1}, {2,1} }  // J
+};
+
+// Define the colors of the tetrominos
+const char COLORS[7] = {
+    'R', // Red
+    'G', // Green
+    'B', // Blue
+    'Y', // Yellow
+    'M', // Magenta
+    'C', // Cyan
+    'O'  // Orange
+};
+
+char gameBoard[HEIGHT][WIDTH]; // Array to hold the game board
+int currentShape[SHAPE_SIZE][2]; // Array to hold the current shape
+int currentShapeX; // X position of the current shape
+int currentShapeY; // Y position of the current shape
+int currentShapeType; // Type of the current shape
+char currentShapeColor; // Color of the current shape
+int score = 0; // Current score
+
+// Function to initialize the game board with empty spaces
+void initGameBoard() {
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            gameBoard[i][j] = ' ';
+        }
+    }
+}
+
+// Function to draw the game board and the current shape
+void drawGameBoard() {
+    system("cls"); // Clear the console
+    cout << "Score: " << score << endl; // Display the current score
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            if (gameBoard[i][j] == ' ') {
+                cout << ".";
+            } else {
+                cout << gameBoard[i][j];
+            }
+        }
+        cout << endl;
+    }
+}
+
+// Function to generate a new random shape
+void newShape() {
+    srand(time(NULL));
+    currentShapeType = rand() % 7;
+    currentShapeColor = COLORS[currentShapeType];
+    for (int i = 0; i < SHAPE_SIZE; i++) {
+        currentShape[i][0] = TETROMINOS[currentShapeType][i][0];
+        currentShape[i][1] = TETROMINOS[currentShapeType][i][1];
+    }
+    currentShapeX
